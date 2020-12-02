@@ -1,0 +1,17 @@
+.header {
+    &__nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        cursor: pointer;
+        &__user {
+            font-weight: 600;
+            margin-right: 0.625rem;
+        }
+        &__avatar {
+            max-width: 50px;
+            border-radius: 50%;
+        }
+    }
+}
