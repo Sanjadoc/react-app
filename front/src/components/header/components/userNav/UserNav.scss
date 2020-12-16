@@ -1,0 +1,25 @@
+.header {
+    &__user {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        cursor: pointer;
+        &__name {
+            max-width: 90px;
+            max-height: 50px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: right;
+            font-weight: 600;
+            margin-right: 0.625rem;
+        }
+        &__avatar {
+            min-width: 50px;
+            width: 50px;
+            img {
+                border-radius: 50%;
+            }
+        }
+    }
+}

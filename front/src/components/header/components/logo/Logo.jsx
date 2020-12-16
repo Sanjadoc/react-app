@@ -2,11 +2,11 @@ import './Logo.scss';
 
 import logo from './logo.svg';
 
-function Logo() {
+function Logo({onClick}) {
     return (
-        <a className="header__logo" href="/" alt="home page">
+        <div className="header__logo" onClick={onClick}>
             <img src={logo} alt="logo" />
-        </a>
+        </div>
     );
 }
 

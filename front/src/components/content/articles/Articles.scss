@@ -1,0 +1,15 @@
+.articles {
+    &__list {
+        text-align: center;
+        margin: 0 auto;
+        &__item {
+            margin-bottom: 1.25rem;
+            padding: 1.25rem;
+            border-radius: 0.5rem;
+            min-height: 18.75rem;
+            width: 100%;
+            background-color: #fafafb;
+            border: 1px solid #a4a4a552;
+        }
+    }
+}
