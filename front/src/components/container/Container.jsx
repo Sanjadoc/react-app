@@ -1,17 +1,17 @@
 import './Container.scss';
 
+import React, { useState } from 'react';
+
 import Content from '../content/Content';
 import Footer from '../footer/Footer';
 import Header from "../header/Header";
-import { useState } from 'react';
+import { PAGE } from '../constants/Pages';
 
 function Container() {
-  const [page, setPage] = useState('homePage');
+  const [page, setPage] = useState(PAGE.HOME);
   const [user, setUser] = useState('');
 
-  const setPageHook = page => {
-    setPage(page);
-  };
+  const setPageHook = page => () => setPage(page);
 
   const setUserHook = e => {
     const userName = `${e.target[0].value} ${e.target[1].value}`;
