@@ -1,0 +1,11 @@
+import './Footer.scss';
+
+function Footer() {
+  return (
+    <footer className="footer">
+      Copyright &copy; 2020 by Social Network - Mikna. All Rights Reserved.
+    </footer>
+  );
+}
+
+export default Footer;
