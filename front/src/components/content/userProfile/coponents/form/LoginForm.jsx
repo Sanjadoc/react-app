@@ -1,5 +1,7 @@
 import './LoginForm.scss';
 
+import PropTypes from 'prop-types';
+
 function LoginForm({setUserHook}) {
 
     return (
@@ -16,6 +18,10 @@ function LoginForm({setUserHook}) {
             </form>
         </div>
     );
+}
+
+LoginForm.propType = {
+    setUserHook: PropTypes.func.isRequired
 }
 
 export default LoginForm;

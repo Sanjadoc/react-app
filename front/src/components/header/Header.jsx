@@ -3,6 +3,7 @@ import './Header.scss';
 import Button from "./components/button/Button";
 import Logo from './components/logo/Logo';
 import { PAGE } from '../constants/Pages';
+import PropTypes from 'prop-types';
 import UserNav from "./components/userNav/UserNav";
 
 function Header({setPageHook, user}) {
@@ -17,6 +18,15 @@ function Header({setPageHook, user}) {
         <UserNav name={user}/>
       </header>
     );
+}
+
+Header.propTypes = {
+  setPageHook: PropTypes.func.isRequired,
+  user: PropTypes.string
+}
+
+Header.defaultProps = {
+  user: ''
 }
 
 export default Header;
