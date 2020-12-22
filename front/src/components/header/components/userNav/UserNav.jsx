@@ -1,6 +1,7 @@
 import './UserNav.scss';
 
 import DropDownItem from './components/dropDownItem/DropDownItem';
+import PropTypes from 'prop-types';
 import userPlaceholder from './user-placeholder.svg';
 
 function UserNav({name}) {
@@ -18,6 +19,14 @@ function UserNav({name}) {
             <DropDownItem/>
         </div>
     );
+}
+
+UserNav.propType = {
+    name: PropTypes.string
+}
+
+UserNav.defaultProps = {
+    name: 'Log in'
 }
 
 export default UserNav;
