@@ -2,18 +2,23 @@ const Router = require('express');
 const router = new Router();
 
 router.get('/', (req, res) => {
-    res.send('<h1 style="text-align:center; color: green;">Hello everyone on my education express page!</h1>');
+    res.send('<h1 style="text-align:center; color: green;">Post lists: </h1>');
 });
 
-router.get('/user/:id', (req, res) => {
-    res.send('<h2>Hello user - ' + `${req.params.id}` + '</h2>')
+router.get('/:id', (req, res) => {
+    res.send(`Get one post with ID: ${req.params.id}`);
 });
 
-router.post('/', (req, res) => {
-    res.send('Hello, from post method - Homepage)');
+router.post('/:id/create', (req, res) => {
+    res.send(`Create post with ID: ${req.params.id}`);
 });
 
-router.put('/user/:id', (req, res) => {});
-router.delete('/user/:id', (req, res) => {});
+router.put('/:id/update', (req, res) => {
+    res.send(`Updated post with ID: ${req.params.id}`);
+});
+
+router.delete('/:id/delete', (req, res) => {
+    res.send(`Deleted post with ID: ${req.params.id}`);
+});
 
 module.exports = router;
