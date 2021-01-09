@@ -1,8 +1,13 @@
 const Router = require('express');
 const router = new Router();
+const db = require('../services/db');
 
 router.get('/', (req, res) => {
-    res.send('<h1 style="text-align:center; color: green;">Post lists: </h1>');
+    db.select().from('posts').then(
+        data => { 
+            res.send(data); 
+        }
+    );
 });
 
 router.get('/:id', (req, res) => {
