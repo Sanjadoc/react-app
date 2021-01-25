@@ -1,8 +1,10 @@
-const Router = require('express');
-const router = new Router();
+const router = require('express').Router();
+const User = require('../models/user');
+const db = require('../services/db');
 
-router.get('/', (req, res) => {
-    res.send('<h1 style="text-align:center; color: green;">User lists: </h1>');
+router.get('/', async(req, res) => {
+    // res.send('<h1 style="text-align:center; color: green;">User lists: </h1>');
+    res.send(await db.select().from(User.tableName).orderBy('id'));
 });
 
 router.get('/:id', (req, res) => {

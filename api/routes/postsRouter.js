@@ -1,14 +1,14 @@
-const Router = require('express');
-const router = new Router();
+const router = require('express').Router();
 const db = require('../services/db');
+const checkAuth = require('../middleware/acl').checkAuthorized;
 
-router.get('/', (req, res) => {
+router.get('/', [checkAuth, (req, res) => {
     db.select().from('posts').then(
         data => { 
             res.send(data); 
         }
     );
-});
+}]);
 
 router.get('/:id', (req, res) => {
     res.send(`Get one post with ID: ${req.params.id}`);
