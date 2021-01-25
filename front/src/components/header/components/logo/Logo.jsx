@@ -1,18 +1,16 @@
 import './Logo.scss';
 
-import PropTypes from 'prop-types';
-import logo from './logo.svg';
+import { Link } from 'react-router-dom';
+import logo from './assets/logo.svg';
 
-function Logo({onClick}) {
+function Logo() {
     return (
-        <div className="header__logo" onClick={onClick}>
-            <img src={logo} alt="logo" />
+        <div className="header__logo">
+            <Link to="/">
+                <img src={logo} alt="logo" />
+            </Link>
         </div>
     );
-}
-
-Logo.propTypes = {
-    onClick: PropTypes.func.isRequired
 }
 
 export default Logo;

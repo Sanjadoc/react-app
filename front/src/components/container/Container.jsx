@@ -5,19 +5,39 @@ import React, { useState } from 'react';
 import Content from '../content/Content';
 import Footer from '../footer/Footer';
 import Header from "../header/Header";
-import { PAGE } from '../constants/Pages';
 
 function Container() {
-  const [page, setPage] = useState(PAGE.HOME);
   const [user, setUser] = useState('');
-
-  const setPageHook = page => () => setPage(page);
 
   const setUserHook = e => {
     const userName = `${e.target[0].value} ${e.target[1].value}`;
     e.preventDefault();
     setUser(userName);
   };
+
+   //test example articles data from API
+   const articlesData = [
+      {
+        id: 1,
+        title: '1 item',
+        desription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et nulla arcu. Curabitur maximus gravida nisl, id elementum tortor pulvinar ac. Praesent quis turpis et tortor scelerisque mollis. Integer pretium placerat elit, in imperdiet diam tristique ut. Pellentesque ut varius ligula. Nunc id tortor urna.'
+      },
+      {
+        id: 2,
+        title: '2 item',
+        desription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et nulla arcu. Curabitur maximus gravida nisl, id elementum tortor pulvinar ac. Praesent quis turpis et tortor scelerisque mollis. Integer pretium placerat elit, in imperdiet diam tristique ut. Pellentesque ut varius ligula. Nunc id tortor urna.'
+      },
+      {
+        id: 3,
+        title: '3 item',
+        desription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et nulla arcu. Curabitur maximus gravida nisl, id elementum tortor pulvinar ac. Praesent quis turpis et tortor scelerisque mollis. Integer pretium placerat elit, in imperdiet diam tristique ut. Pellentesque ut varius ligula. Nunc id tortor urna.'
+      },
+      {
+        id: 4,
+        title: '4 item',
+        desription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et nulla arcu. Curabitur maximus gravida nisl, id elementum tortor pulvinar ac. Praesent quis turpis et tortor scelerisque mollis. Integer pretium placerat elit, in imperdiet diam tristique ut. Pellentesque ut varius ligula. Nunc id tortor urna.'
+      }
+   ];
   
   //test example user data from API
   const userData = {
@@ -75,8 +95,8 @@ function Container() {
 
   return (
     <div className="container">
-      <Header user={user} setPageHook={setPageHook}/>
-      <Content currentPage={page} setUserHook={setUserHook} userData={userData}/>
+      <Header user={user} />
+      <Content setUserHook={setUserHook} userData={userData} articlesData={articlesData}/>
       <Footer />
     </div>
   );

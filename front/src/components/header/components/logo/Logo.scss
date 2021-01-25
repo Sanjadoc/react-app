@@ -1,10 +1,15 @@
 .header {
     &__logo {
       display: flex;
-      width: 10rem;
       cursor: pointer;
-      img {
-        max-width: 10rem;
-      } 
+      a {
+        display: block;
+        width: 13rem;
+        max-width: 13rem;
+        img {
+          padding-top: 0.5rem;
+          width: auto;
+       } 
+    }
     }
 }
