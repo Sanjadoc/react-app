@@ -1,6 +1,9 @@
 .container {   
     max-width: 1140px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     position: relative;
     box-shadow: 0 0 10px rgba(0,0,0,0.1); 
 }

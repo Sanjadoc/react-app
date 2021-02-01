@@ -1,10 +1,12 @@
 import './DropDownItem.scss';
 
+import { Link } from 'react-router-dom';
+
 function DropDownItem() {
     return (
         <div className="header__user__drop">
-            <a href="/" >Profile</a>
-            <a href="/">Logout</a>
+         <Link to='/profile'>Profile</Link>
+         <Link to='/'>Logout</Link>
         </div>
     );
 }

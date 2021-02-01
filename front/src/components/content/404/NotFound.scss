@@ -1,0 +1,27 @@
+.not-found {
+    padding-top: 1.875rem;
+    text-align: center;
+    & img {
+        display: block;
+        margin: 0 auto;
+        max-width: 18.75rem;
+    }
+    & a {
+        display: block;
+        margin: 1.25rem auto;
+        max-width: 12.5rem;
+        text-decoration: none;
+        font-size: 1.875rem;
+        font-weight: 600;
+        color: black;
+        transition: 0.3s all;
+        max-width: 200px;
+        text-decoration: underline;
+    text-align: center;
+    
+        &:hover {
+            opacity: 0.8;
+            text-decoration: none;
+        }
+    }
+}

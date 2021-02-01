@@ -1,22 +1,15 @@
-.articles {
+.article {
     &__list {
+        text-align: center;
         margin: 0 auto;
         &__item {
-            display: block;
-            text-decoration: none;
             margin-bottom: 1.25rem;
             padding: 1.25rem;
             border-radius: 0.5rem;
             min-height: 18.75rem;
             width: 100%;
             background-color: #fafafb;
-            color: #000000;
             border: 1px solid #a4a4a552;
-            transition: 0.3s all;
-            &:hover {
-                transform: scale(1.01);
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            }
         }
     }
 }
