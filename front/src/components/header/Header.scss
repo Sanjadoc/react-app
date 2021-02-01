@@ -20,8 +20,18 @@
     }
     &__nav {
         text-align: center;
-        button {
-            margin-right: 10px;
+        a {
+            button {
+                margin-right: 10px;
+            }
+            &.active {
+                button {
+                    opacity: 0.9;
+                    color: #000000;
+                    background-color: #F7F70D;
+                    box-shadow: 0 0 3px rgba(0,0,0,0.5);
+                }
+            }
         }
     }
 }
