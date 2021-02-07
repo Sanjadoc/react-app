@@ -1,4 +1,4 @@
-const knex = require('knex')({
+const knex = require("knex")({
     client: process.env.DB_CLIENT,
     connection: {
         host: process.env.DB_HOST,
