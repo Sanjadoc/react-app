@@ -1,34 +1,35 @@
-const db = require('../services/db');
-const bcrypt = require('bcrypt');
-const { where } = require('../services/db');
+const db = require("../services/db");
 
 class User {
-  static tableName = 'users';
+  static tableName = "users";
 
-  static async findByName(userName) {
-      return db.select().from(User.tableName).where({ email: userName }).first();
+  static async createUser(user) {
+    return db(User.tableName).insert({ ...user });
   }
 
-  static async updateUser(user) {
-      return db(User.tableName).where('id', '=', user.id).update({email: user.email, password: user.password, token: user.token});
+  static async findByEmail(email) {
+    return db.select().from(User.tableName).where({ email: email }).first();
   }
 
-  static async createUser(email, password) {
-     return await db(User.tableName)
-        .insert({
-            email: email,
-            password: bcrypt.hashSync(password, 10)
-    });
+  static async updateToken(user) {
+    return db(User.tableName)
+      .where("id", "=", user.id)
+      .update({ token: user.token });
   }
 
-  static findByToken(token) {
-    return db.select().from(User.tableName).where({ token }).first();
+  static async findByToken(token) {
+    return db.select("id").from(User.tableName).where({ token }).first();
   }
 
-  static deleteUserToken(email) {
-    return db(User.tableName).where('email', '=', email).update( {token: ''} );
-  }  
-  
+  static async deleteToken(email) {
+    return db(User.tableName).where("email", "=", email).update({ token: "" });
+  }
+
+  static async setActive(userId) {
+    return db(User.tableName)
+      .where("id", "=", userId)
+      .update({ active: "true" });
+  }
 }
 
 module.exports = User;

@@ -1,29 +1,12 @@
-const router = require('express').Router();
-const db = require('../services/db');
-const checkAuth = require('../middleware/acl').checkAuthorized;
+const router = require("express").Router();
+const checkAuth = require("../middleware/acl").checkAuthorized;
+const postController = require("../controllers/postController");
 
-router.get('/', [checkAuth, (req, res) => {
-    db.select().from('posts').then(
-        data => { 
-            res.send(data); 
-        }
-    );
-}]);
-
-router.get('/:id', (req, res) => {
-    res.send(`Get one post with ID: ${req.params.id}`);
-});
-
-router.post('/:id/create', (req, res) => {
-    res.send(`Create post with ID: ${req.params.id}`);
-});
-
-router.put('/:id/update', (req, res) => {
-    res.send(`Updated post with ID: ${req.params.id}`);
-});
-
-router.delete('/:id/delete', (req, res) => {
-    res.send(`Deleted post with ID: ${req.params.id}`);
-});
+router.get("/", checkAuth, postController.getAllPosts);
+router.get("/:id", checkAuth, postController.getOnePost);
+router.post("/:create", checkAuth, postController.createPost);
+router.put("/:id/update", checkAuth, postController.updatePost);
+router.delete("/:id/delete", checkAuth, postController.deletePost);
 
 module.exports = router;
+
