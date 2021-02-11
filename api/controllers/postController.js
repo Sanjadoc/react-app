@@ -24,8 +24,8 @@ class PostController {
     try {
         const post = {
             p_title: req.body.p_title,
-            p_descriptions:  req.body.p_descriptions,
-            p_own_id:  req.body.p_own_id
+            p_descriptions: req.body.p_descriptions,
+            userId: req.body.userId
         };
         await Post.createPost(post);
         res.json("Post was created!");
@@ -38,8 +38,8 @@ class PostController {
     try {
         const post = {
             p_title: req.body.p_title,
-            p_descriptions:  req.body.p_descriptions,
-            p_own_id:  req.body.p_own_id
+            p_descriptions: req.body.p_descriptions,
+            userId: req.body.userId
         };
         const { id } = req.params;
         await Post.updatePostById(id, post);

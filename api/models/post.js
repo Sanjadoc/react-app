@@ -20,7 +20,7 @@ class Post {
       .update({
         p_title: newPostData.p_title,
         p_descriptions: newPostData.p_descriptions,
-        p_own_id: newPostData.p_own_id,
+        userId: newPostData.userId,
       });
   }
 
