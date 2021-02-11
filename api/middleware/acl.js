@@ -3,7 +3,7 @@ function checkAuthorized(req, res, next) {
     console.log("Authorized content - ok");
     next();
   } else {
-    next("Access denied");
+    next("Access denied. You are not authorized");
   }
 }
 
