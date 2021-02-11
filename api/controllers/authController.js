@@ -108,7 +108,6 @@ class AuthController {
           linkEmailVerify +
           ">Click to verify your account</a>",
       };
-      //  console.log(mailOptions);
       try {
         mailSender.sendMail(mailOptions, (error) => {
           if (error) {
@@ -148,4 +147,5 @@ class AuthController {
     }
   }
 }
+
 module.exports = new AuthController();

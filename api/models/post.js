@@ -1,5 +1,4 @@
 const db = require("../services/db");
-
 class Post {
   static tableName = "posts";
 
@@ -21,12 +20,14 @@ class Post {
       .update({
         p_title: newPostData.p_title,
         p_descriptions: newPostData.p_descriptions,
+        p_own_id: newPostData.p_own_id,
       });
   }
 
   static async deletePostById(postId) {
     return db(Post.tableName).where("id", "=", postId).delete();
   }
+
 }
 
 module.exports = Post;

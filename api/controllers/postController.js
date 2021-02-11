@@ -25,6 +25,7 @@ class PostController {
         const post = {
             p_title: req.body.p_title,
             p_descriptions:  req.body.p_descriptions,
+            p_own_id:  req.body.p_own_id
         };
         await Post.createPost(post);
         res.json("Post was created!");
@@ -38,6 +39,7 @@ class PostController {
         const post = {
             p_title: req.body.p_title,
             p_descriptions:  req.body.p_descriptions,
+            p_own_id:  req.body.p_own_id
         };
         const { id } = req.params;
         await Post.updatePostById(id, post);

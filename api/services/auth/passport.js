@@ -15,7 +15,6 @@ passport.use(
     async (email, password, done) => {
       try {
         const user = await User.findByEmail(email);
-        // console.log(user);
         if (!user) {
           return done(null, false, { message: "User is not registered" });
         }
