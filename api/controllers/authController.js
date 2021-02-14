@@ -7,7 +7,6 @@ const jwt = require("jsonwebtoken");
 const mailSender = require("../services/mailSender");
 
 class AuthController {
-  
   async login(req, res, next) {
     passport.authenticate(
       "local",
@@ -21,7 +20,7 @@ class AuthController {
           throw new Error(trace.message || "Authentication error");
         }
 
-        const jwtToken = jwt.sign(
+        const token = jwt.sign(
           { id: user.id, email: user.email },
           process.env.JWT_SECRET,
           {
@@ -30,7 +29,7 @@ class AuthController {
           },
         );
 
-        user.token = jwtToken;
+        user.token = token;
 
         try {
           await User.updateToken(user);
@@ -42,7 +41,8 @@ class AuthController {
       },
     )(req, res, next);
   }
-
+ 
+  
   // router.post("/social/google", (req, res) =>
   //   passport.authenticate(
   //     "google",
@@ -108,7 +108,6 @@ class AuthController {
           linkEmailVerify +
           ">Click to verify your account</a>",
       };
-      //  console.log(mailOptions);
       try {
         mailSender.sendMail(mailOptions, (error) => {
           if (error) {
@@ -130,7 +129,6 @@ class AuthController {
   async emailVerify(req, res) {
     const userId = await User.findByToken(req.params.token);
     if (userId) {
-      // console.log(userId.id);
       await User.setActive(userId.id);
       res.send("Email has been verified");
     } else {
@@ -149,4 +147,5 @@ class AuthController {
     }
   }
 }
+
 module.exports = new AuthController();
