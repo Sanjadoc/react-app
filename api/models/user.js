@@ -8,7 +8,11 @@ class User {
   }
 
   static async findByEmail(email) {
-    return db.select().from(User.tableName).where({ email: email }).first();
+    return db.select().from(User.tableName).where({ email }).first();
+  }
+
+  static async findById(id) {
+    return db.select().from(User.tableName).where({ id }).first();
   }
 
   static async updateToken(user) {
