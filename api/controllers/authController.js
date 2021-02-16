@@ -1,6 +1,6 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
-const { v4: uuidv4 } = require("uuid");
+const { v4: uuidv4, validate } = require("uuid");
 
 const passport = require("../services/auth/passport");
 const jwt = require("jsonwebtoken");
@@ -41,29 +41,6 @@ class AuthController {
       },
     )(req, res, next);
   }
- 
-  
-  // router.post("/social/google", (req, res) =>
-  //   passport.authenticate(
-  //     "google",
-  //     {
-  //       scope: ["email", "profile"],
-  //     },
-  //     async (err, user, trace) => {
-  //       if (err || !user) {
-  //         throw new Error(trace.message || "Authentication error");
-  //       }
-  //       console.log("GOOGLE USER:", user);
-  //       // @TODO: Match Google to system user and get appropriate one from DB [...]
-  //       const jwtToken = jwt.sign(user, process.env.JWT_SECRET, {
-  //         expiresIn: "1d",
-  //         audience: process.env.HOST,
-  //       });
-
-  //       res.send({ token: jwtToken });
-  //     },
-  //   )(req, res),
-  // );
 
   async registration(req, res, next) {
     const emailTrim = req.body.email.trim();
@@ -134,6 +111,141 @@ class AuthController {
     } else {
       res.send("Sorry, email not verify");
     }
+  }
+
+
+  async google(req, res, next) {
+    passport.authenticate(
+      "google",
+      {
+        scope: ["email", "profile"],
+      },
+      async (err, user, trace) => {
+        if (err || !user) {
+          throw new Error(trace || "Authentication error");
+        }
+      
+        // console.log("GOOGLE USER:", user);
+
+        const userInDb = await User.findByEmail(user.email);
+
+        if(userInDb) {
+          const tokenForUserInDb = jwt.sign({ id: userInDb.id, email: userInDb.email },
+            process.env.JWT_SECRET, {
+            expiresIn: "3h",
+            audience: process.env.HOST,
+          });
+        
+          userInDb.token = tokenForUserInDb;
+
+          try {
+            await User.updateToken(userInDb);
+          } catch (error) {
+            res.status(400).json({ message: error.message });
+          }
+        
+          res.send({ token: tokenForUserInDb });
+          
+        } else {
+
+          const newUser = {
+            email: user.email,
+            password: bcrypt.hashSync(user.email, 10),
+            first_name: user.given_name,
+            last_name: user.family_name,
+            active: true,
+          };
+       
+          await User.createUser(newUser);
+
+          const newSocUser = await User.findByEmail(user.email);
+          
+          const jwtSocToken = jwt.sign({ id: newSocUser.id, email: newSocUser.email },
+             process.env.JWT_SECRET, {
+            expiresIn: "3h",
+            audience: process.env.HOST,
+          });
+
+          newSocUser.token = jwtSocToken;
+
+          try {
+            await User.updateToken(newUser);
+          } catch (error) {
+            res.status(400).json({ message: error.message });
+          }
+        
+          res.send({ token: jwtSocToken });
+        }      
+        
+      },
+    )(req, res, next);
+  }
+
+  async facebook(req, res, next) {
+    passport.authenticate(
+      "facebook",
+      {
+        scope: ["email", "profile"],
+      },
+      async (err, user, trace) => {
+        if (err || !user) {
+          throw new Error(trace || "Authentication error");
+        }
+      
+        // console.log("FACEBOOK USER:", user);
+
+        const userInDb = await User.findByEmail(user.email);
+
+        if(userInDb) {
+          const tokenForUserInDb = jwt.sign({ id: userInDb.id, email: userInDb.email },
+            process.env.JWT_SECRET, {
+            expiresIn: "3h",
+            audience: process.env.HOST,
+          });
+        
+          userInDb.token = tokenForUserInDb;
+
+          try {
+            await User.updateToken(userInDb);
+          } catch (error) {
+            res.status(400).json({ message: error.message });
+          }
+        
+          res.send({ token: tokenForUserInDb });
+          
+        } else {
+
+          const newUser = {
+            email: user.email,
+            password: bcrypt.hashSync(user.email, 10),
+            first_name: user.first_name,
+            last_name: user.last_name,
+            active: true,
+          };
+       
+          await User.createUser(newUser);
+
+          const newSocUser = await User.findByEmail(user.email);
+          
+          const jwtSocToken = jwt.sign({ id: newSocUser.id, email: newSocUser.email },
+             process.env.JWT_SECRET, {
+            expiresIn: "3h",
+            audience: process.env.HOST,
+          });
+
+          newSocUser.token = jwtSocToken;
+
+          try {
+            await User.updateToken(newUser);
+          } catch (error) {
+            res.status(400).json({ message: error.message });
+          }
+        
+          res.send({ token: jwtSocToken });
+        }      
+        
+      },
+    )(req, res, next);
   }
 
   async logout(req, res, next) {

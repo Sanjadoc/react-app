@@ -1,5 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+#---Front---
+
 # dependencies
 /api/node_modules
 
@@ -13,6 +15,18 @@
 # production
 /front/build
 
+/front/npm-debug.log*
+/front/yarn-debug.log*
+/front/yarn-error.log*
+
+/front/.env
+/front/.env.local
+/front/.env.development.local
+/front/.env.test.local
+/front/.env.production.local
+
+
+#---API---
 # misc
 .DS_Store
 /api/.env
@@ -25,6 +39,3 @@
 /api/yarn-debug.log*
 /api/yarn-error.log*
 
-/front/npm-debug.log*
-/front/yarn-debug.log*
-/front/yarn-error.log*
