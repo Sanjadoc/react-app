@@ -17,6 +17,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // app.use(express.json());
 app.use(passport.initialize());
+
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, PUT, PATCH, POST, DELETE");
+  res.header("Access-Control-Allow-Headers", "X-PINGOTHER, Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+  res.header("Access-Control-Max-Age", "86400");
+  next();
+});
+
 app.use(authRequest);
 
 app.use("/auth", authRoutes);

@@ -2,11 +2,8 @@ import './UserProfile.scss';
 
 import LoginForm from './coponents/form/LoginForm';
 import PropTypes from 'prop-types';
-import { userDataType } from './userProfileType/UserProfileType';
 
-function UserProfile({setUserHook, userData}) {
-
-  console.log(userData);
+function UserProfile({setUserHook}) {
 
   return (
     <div className="user-profile">
@@ -17,8 +14,7 @@ function UserProfile({setUserHook, userData}) {
 }
 
 UserProfile.propType = {
-  setUserHook: PropTypes.func.isRequired,
-  userData: userDataType
+  setUserHook: PropTypes.func.isRequired
 }
 
 export default UserProfile;
