@@ -6,8 +6,7 @@ import SocialButton from "./coponents/socialButton/SocialButton";
 import axios from "axios";
 import { userDataType } from "./userProfileType/UserProfileType";
 
-function UserProfile({ setUserHook, userData }) {
-  // console.log("userData for test:", userData);
+function UserProfile({ setUserHook }) {
 
   const { REACT_APP_GOOGLE_APP_ID, REACT_APP_FACEBOOK_APP_ID } = process.env;
 
@@ -83,8 +82,8 @@ function UserProfile({ setUserHook, userData }) {
 }
 
 UserProfile.propType = {
-  setUserHook: PropTypes.func.isRequired,
-  userData: userDataType,
-};
+  setUserHook: PropTypes.func.isRequired
+}
+
 
 export default UserProfile;
