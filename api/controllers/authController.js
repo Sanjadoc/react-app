@@ -29,15 +29,7 @@ class AuthController {
           },
         );
 
-        user.token = token;
-
-        try {
-          await User.updateToken(user);
-        } catch (error) {
-          res.status(400).json({ message: error.message });
-        }
-
-        res.send({ token: user.token });
+        res.send({ token });
       },
     )(req, res, next);
   }
@@ -126,7 +118,6 @@ class AuthController {
         }
       
         // console.log("GOOGLE USER:", user);
-
         const userInDb = await User.findByEmail(user.email);
 
         if(userInDb) {
@@ -135,15 +126,7 @@ class AuthController {
             expiresIn: "3h",
             audience: process.env.HOST,
           });
-        
-          userInDb.token = tokenForUserInDb;
-
-          try {
-            await User.updateToken(userInDb);
-          } catch (error) {
-            res.status(400).json({ message: error.message });
-          }
-        
+                
           res.send({ token: tokenForUserInDb });
           
         } else {
@@ -165,14 +148,6 @@ class AuthController {
             expiresIn: "3h",
             audience: process.env.HOST,
           });
-
-          newSocUser.token = jwtSocToken;
-
-          try {
-            await User.updateToken(newUser);
-          } catch (error) {
-            res.status(400).json({ message: error.message });
-          }
         
           res.send({ token: jwtSocToken });
         }      
@@ -193,7 +168,6 @@ class AuthController {
         }
       
         // console.log("FACEBOOK USER:", user);
-
         const userInDb = await User.findByEmail(user.email);
 
         if(userInDb) {
@@ -202,15 +176,7 @@ class AuthController {
             expiresIn: "3h",
             audience: process.env.HOST,
           });
-        
-          userInDb.token = tokenForUserInDb;
 
-          try {
-            await User.updateToken(userInDb);
-          } catch (error) {
-            res.status(400).json({ message: error.message });
-          }
-        
           res.send({ token: tokenForUserInDb });
           
         } else {
@@ -233,14 +199,6 @@ class AuthController {
             audience: process.env.HOST,
           });
 
-          newSocUser.token = jwtSocToken;
-
-          try {
-            await User.updateToken(newUser);
-          } catch (error) {
-            res.status(400).json({ message: error.message });
-          }
-        
           res.send({ token: jwtSocToken });
         }      
         
