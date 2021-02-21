@@ -1,7 +1,8 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const JwtStrategy = require("passport-jwt").Strategy;
-// const GoogleStrategy = require("./strategies/google");
+const GoogleStrategy = require("./strategies/google");
+const FacebookStrategy = require("./strategies/facebook");
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 const bcrypt = require("bcrypt");
 const User = require("../../models/user");
@@ -61,11 +62,38 @@ passport.use(
   ),
 );
 
-// passport.use(
-//   new GoogleStrategy(function (profile, done) {
-//     // @TODO: Sanitize or transform user profile data
-//     return profile ? done(null, profile) : done("Google auth failed", null);
-//   }),
-// );
+passport.use(
+  new GoogleStrategy(async (profile, done) => {
+    try {
+      const user = await User.findByEmail(profile.email);
+      if (user) {
+        done(null, profile);
+      } else {
+        done(null, profile);
+      }
+    } catch (error) {
+      done("Google auth failed", null);
+      console.log(error.stack);
+    }
+    // return profile ? done(null, profile) : done("Google auth failed", null);
+  }),
+);
+
+passport.use(
+  new FacebookStrategy(async (profile, done) => {
+      try {
+        const user = await User.findByEmail(profile.email);
+        if (user) {
+          done(null, profile);
+        } else {
+          done(null, profile);
+        }
+      } catch (error) {
+        done("Facebook auth failed", null);
+        console.log(error.stack);
+      }
+    }
+  )
+);
 
 module.exports = passport;

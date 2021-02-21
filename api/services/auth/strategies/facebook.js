@@ -2,7 +2,7 @@ const passport = require("passport-strategy");
 const util = require("util");
 const axios = require("axios").default;
 
-const GOOGLE_AUTH_ENDPOINT = "https://www.googleapis.com/oauth2/v3/userinfo";
+const FACEBOOK_AUTH_ENDPOINT = "https://graph.facebook.com/me?fields=name,id,email,first_name,last_name";
 
 function Strategy(options, verify) {
   if (typeof options == "function") {
@@ -10,12 +10,12 @@ function Strategy(options, verify) {
     options = {};
   }
   if (!verify) {
-    throw new TypeError("Google strategy requires a verify callback");
+    throw new TypeError("Facebook strategy requires a verify callback");
   }
 
   passport.Strategy.call(this);
 
-  this.name = "google";
+  this.name = "facebook";
   this._verify = verify;
   this._options = options;
 }
@@ -60,7 +60,7 @@ Strategy.prototype.authenticate = function (req, options) {
 
   try {
     axios
-      .get(GOOGLE_AUTH_ENDPOINT, {
+      .get(FACEBOOK_AUTH_ENDPOINT, {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${accessToken}`,
