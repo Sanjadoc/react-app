@@ -1,0 +1,35 @@
+.social-btn {
+    margin-top: 1rem;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 0.75rem 0.875rem;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+    &.google{
+        background-color: #4285f4;
+        opacity: 0.9;
+        &:hover {
+            background-color: #4285f4;
+            opacity: 1;
+        }
+    }
+    &.facebook{
+        background-color: #3B5998;
+        opacity: 0.9;
+        &:hover {
+            background-color: #3B5998;
+            opacity: 1;
+        }
+    }
+    &:hover {
+        background-color: #0069d9;
+    }
+    &:active {
+       opacity: 0.7;
+    }
+}
