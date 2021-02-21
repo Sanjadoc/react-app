@@ -4,7 +4,6 @@ import LoginForm from "./coponents/form/LoginForm";
 import PropTypes from "prop-types";
 import SocialButton from "./coponents/socialButton/SocialButton";
 import axios from "axios";
-import { userDataType } from "./userProfileType/UserProfileType";
 
 function UserProfile({ setUserHook }) {
 
