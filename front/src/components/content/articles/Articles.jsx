@@ -2,11 +2,9 @@ import './Articles.scss';
 
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { articlesDataType } from './articlesType/articlesType';
 
 function Articles({articlesData}) {
-
-  // console.log(articlesData);
-
   return (
     <div className="articles">
       <h1>Articles list page</h1>
@@ -14,10 +12,9 @@ function Articles({articlesData}) {
       <div className="articles__list">
         { articlesData.map((item, i) => (
           <Link key={i} to={`/articles/${item.id}`}  className="articles__list__item"> 
-  
-              <h2>{item.title}</h2> 
-              <p>{item.desription}</p>
-
+              <h2>{item.id}. {item.p_title} </h2> 
+              <p>Small descriptions: {item.p_descriptions}</p>
+              <p>Create by user id: {item.userId}</p>
           </Link>
         )) }
       </div>
@@ -26,7 +23,11 @@ function Articles({articlesData}) {
 }
 
 Articles.propType = {
-  articlesData: PropTypes.func.isRequired
+  articlesData:  PropTypes.arrayOf(articlesDataType)
 }
+
+Articles.defaultProps = {
+  articlesData: []
+} 
 
 export default Articles;

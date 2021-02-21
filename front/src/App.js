@@ -1,6 +1,6 @@
 import './App.scss';
 
-import Container from './components/container/Container';
+import Container from './containers/Container';
 import ErrorBoundary from './components/errorBoundary/ErrorBoundary';
 import {BrowserRouter as Router} from 'react-router-dom';
 
