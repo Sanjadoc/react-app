@@ -3,8 +3,9 @@ const Post = require("../models/post");
 class PostController {
     
   async getAllPosts(req, res, next) {
+    const limit = req.query.limit || 2;
     try {
-      const dataPosts = await Post.getAllPosts();
+      const dataPosts = await Post.getAllPosts(limit);
       res.json(dataPosts);
     } catch (error) {
         res.status(404).json(error.message);
@@ -21,11 +22,15 @@ class PostController {
   }
 
   async createPost(req, res, next) {
+    const date = new Date();
     try {
         const post = {
-            p_title: req.body.p_title,
-            p_descriptions: req.body.p_descriptions,
-            userId: req.body.userId
+            title: req.body.title,
+            text: req.body.text,
+            userId: req.body.userId,
+            access: req.body.access,
+            dataCreate: date,
+            dataEdit: date
         };
         await Post.createPost(post);
         res.json("Post was created!");
@@ -35,11 +40,14 @@ class PostController {
   }
 
   async updatePost(req, res, next) {
+    const date = new Date();
     try {
         const post = {
-            p_title: req.body.p_title,
-            p_descriptions: req.body.p_descriptions,
-            userId: req.body.userId
+            title: req.body.title,
+            text: req.body.text,
+            userId: req.body.userId,
+            access: req.body.access,
+            dataEdit: date
         };
         const { id } = req.params;
         await Post.updatePostById(id, post);
