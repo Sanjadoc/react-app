@@ -2,30 +2,27 @@ import './Content.scss';
 
 import {Route, Switch} from 'react-router-dom'
 
-import AddArticles from "./articles/addArticles/AddArticles";
 import ArticlesListContainer from '../../containers/articles/ArticlesList';
+import CreateArticleContainer from '../../containers/articles/singleArticle/CreateArticle';
 import Home from "./home/Home"
 import NotFound from './404/NotFound';
 import PropTypes from 'prop-types';
-import SingleArticle from './articles/singleArticle/SingleArticle';
+import SingleArticleContainer from '../../containers/articles/singleArticle/SingleArticle';
 import UserProfile from "./userProfile/UserProfile";
 
 function Content({setUserHook, userData}) {
   return (
     <div className="content">
       <Switch>
-        <Route exact path='/' component={Home}/>
-        <Route exact path='/articles'>
+        <Route exact path="/" component={Home}/>
+        <Route exact path="/articles">
           <ArticlesListContainer />
         </Route>
-        <Route exact path='/articles/add' component={AddArticles}/>
-        <Route exact path='/articles/:id'
-          render = { propsRoute => 
-            <SingleArticle props={propsRoute} />
-          } 
-        >
-        </Route>
-        <Route exact path='/profile'>
+        <Route exact sensitive strict 
+          path={["/articles/add", "/articles/:id/edit"]}
+          render={propsRoute => <CreateArticleContainer routes={propsRoute} />} />
+        <Route exact path="/articles/:id" render = { propsRoute => <SingleArticleContainer routes={propsRoute} /> } />
+        <Route exact path="/profile">
           <UserProfile setUserHook={setUserHook} userData={userData}/>
         </Route>
          <Route component={NotFound} />

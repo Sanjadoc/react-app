@@ -1,23 +1,19 @@
-import React, { useEffect, useState } from "react";
-
 import Articles from "../../components/content/articles/Articles";
 import { Redirect } from "react-router-dom";
 import { getArticlesList } from "./hooks/apiArticles";
+import { useQuery } from "react-query";
+import { useState } from "react";
 
 function ArticlesListContainer() {
-  const [articles, setArticles] = useState([]);
+  const [limit, setLimitLoad] = useState(2);
 
-  const getArticlesData = () => {
-    async function fetchData() {
-      const { data } = await getArticlesList();
-      setArticles(data);
-    }
-    fetchData();
-  };
+  const { data: res, isFetching } = useQuery(["posts", limit], () => getArticlesList({ limit }));
 
-  useEffect(getArticlesData, []);
+  const articlesData = res?.data || [];
 
-  return articles ? <Articles articlesData={articles} /> : <Redirect to="/" />;
+  const submitLimit = () => { setLimitLoad(limit + 2); };
+
+  return articlesData ? <Articles articlesData={articlesData} isFetching={isFetching} submitLimit={submitLimit}  /> : <Redirect to="/" />;
 }
 
 export default ArticlesListContainer;

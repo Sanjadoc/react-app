@@ -2,12 +2,12 @@ const db = require("../services/db");
 class Post {
   static tableName = "posts";
 
-  static async getAllPosts() {
-    return db.select().from(Post.tableName);
+  static async getAllPosts(limit) {
+    return db.select().from(Post.tableName).limit(limit).orderBy("id");
   }
 
   static async getPostByID(id) {
-    return db.select().from(Post.tableName).where("id", "=", id);
+    return db.select().from(Post.tableName).where("id", "=", id).first();
   }
 
   static async createPost(data) {
@@ -18,9 +18,11 @@ class Post {
     return db(Post.tableName)
       .where("id", "=", postId)
       .update({
-        p_title: newPostData.p_title,
-        p_descriptions: newPostData.p_descriptions,
+        title: newPostData.title,
+        text: newPostData.text,
         userId: newPostData.userId,
+        access: newPostData.access,
+        dataEdit: newPostData.dataEdit
       });
   }
 
