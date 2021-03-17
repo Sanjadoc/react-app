@@ -1,26 +1,24 @@
-.header {
-    &__btn {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        background-color: #007bff;
-        border: none;
-        color: white;
-        padding: 0.75rem 0.875rem;
-        text-align: center;
-        text-decoration: none;
-        font-size: 1rem;
-        margin: 0.25rem 0;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: all 0.3s;
-        &:hover {
-            background-color: #0069d9;
-        }
-        &:active {
-           opacity: 0.7;
-        }
-        &.active {
-            opacity: 0.7;
-         }
-    }
+.btn {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 0.75rem 0.875rem;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1rem;
+  margin: 0.25rem 0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+  &:hover {
+    background-color: #0069d9;
+  }
+  &:active {
+    opacity: 0.7;
+  }
+  &.active {
+    opacity: 0.7;
+  }
 }

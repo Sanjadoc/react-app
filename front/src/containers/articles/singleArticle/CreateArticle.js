@@ -6,9 +6,7 @@ import { AccessArticles } from '../../../components/content/articles/constants/A
 import CreateArticle from '../../../components/content/articles/createArticle/CreateArticle';
 import PropTypes from 'prop-types';
 
-function CreateArticleContainer({ routes }) {
-
-    const articleId = routes.match.params.id;
+function CreateArticleContainer({ articleId, isOpen, handleClose }) {
     const { data: res, isFetching } = useQuery(["posts", articleId], () => getOneArticle({ articleId }),{ enabled: !!articleId });
     const articleData = res?.data || { title: "", text: "", access: AccessArticles.ALL, userId: 45 };
 
@@ -35,18 +33,23 @@ function CreateArticleContainer({ routes }) {
 
     return (
         <>
-            {!articleId ?
-                <CreateArticle articleData={articleData} onSubmit={onSubmitCreate} isEdit={true} />
-                : (isFetching ?
-                    <div>Please wait! Content loading...</div> 
-                    : <CreateArticle articleData={articleData} onSubmit={onSubmitUpdate} isEdit={false} />)
+            { !isFetching && 
+                <CreateArticle
+                    articleData={articleData}
+                    onSubmit={!!articleId ? onSubmitUpdate : onSubmitCreate}
+                    edit={!!articleId}
+                    isOpen={isOpen}
+                    handleClose={handleClose}
+                />
             }
         </>
     );
 }
 
 CreateArticleContainer.propTypes = {
-    routes: PropTypes.object.isRequired,
+    articleId: PropTypes.number,
+    isOpen: PropTypes.bool,
+    handleClose: PropTypes.func
 }
 
 export default CreateArticleContainer;

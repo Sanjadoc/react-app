@@ -1,5 +1,10 @@
 .articles {
+    text-align: center;
+    h1,p {
+        text-align: left;
+    }
     &__list {
+        text-align: left;
         margin: 0 auto;
         &__item {
             display: block;
@@ -19,6 +24,10 @@
             }
             p {
                 overflow: hidden;
+            }
+            a {
+                text-decoration: none;
+                color: #000000;
             }
         }
     }
