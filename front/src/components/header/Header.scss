@@ -21,6 +21,7 @@
     &__nav {
         text-align: center;
         a {
+            text-decoration: none;
             button {
                 margin-right: 10px;
             }
@@ -32,6 +33,9 @@
                     box-shadow: 0 0 3px rgba(0,0,0,0.5);
                 }
             }
+        }
+        button {
+            margin-right: 10px;
         }
     }
 }

@@ -1,6 +1,8 @@
 import './Articles.scss';
 
-import Button from "../../header/components/button/Button";
+import AddEditArticlesBtn from '../../../containers/articles/singleArticle/AddEditArticlesBtn';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { articlesDataType } from './articlesType/articlesType';
@@ -13,7 +15,8 @@ function Articles({articlesData, isFetching , submitLimit}) {
       <div className="articles__list">
         { isFetching && <p>Wait, article is loading...</p> }
         { !isFetching && articlesData.map((item, i) => (
-          <Link key={i} to={`/articles/${item.id}`}  className="articles__list__item"> 
+          <div className="articles__list__item" key={i}>
+          <Link to={`/articles/${item.id}`}  > 
             <h2>{item.id}. {item.title} </h2> 
             <p>Small descriptions: {item.text}</p>
             <p>Create by user id: {item.userId}</p>
@@ -22,9 +25,18 @@ function Articles({articlesData, isFetching , submitLimit}) {
             <p>Create date: {item.dataCreate}</p>
             <p>Edit date: {item.dataEdit}</p>
           </Link>
+          <AddEditArticlesBtn isCreate={false} id={item.id} />
+          </div>
         )) }
       </div>
-      <Button title={'Show more'} onClick={submitLimit} />
+      {!isFetching && <Button 
+                        variant="contained" 
+                        color="primary" 
+                        aria-label="Show more"
+                        startIcon={<ArrowDownwardIcon/>}
+                        endIcon={<ArrowDownwardIcon/>} 
+                        onClick={submitLimit}
+                      >Show more</Button>}
     </div>
   );
 }

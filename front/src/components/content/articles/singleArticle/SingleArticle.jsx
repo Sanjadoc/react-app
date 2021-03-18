@@ -1,11 +1,15 @@
 import './SingleArticle.scss';
 
-import { Link, Redirect, useRouteMatch } from 'react-router-dom';
-
-import Button from '../../../header/components/button/Button';
+import AddEditArticlesBtn from '../../../../containers/articles/singleArticle/AddEditArticlesBtn';
 import NotFound from '../../404/NotFound';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import { articleDataType } from '../articlesType/articlesType';
+
+// import Button from '../../../header/components/button/Button';
+
+
+
 
 function SingleArticle(data) {
   
@@ -17,21 +21,19 @@ function SingleArticle(data) {
       { 
         articleData ?
         <>
-        <h1>Single Atricle page: {title}</h1>
-        <div className="article__block">
-          <h2>{id}. {title} </h2> 
-          <p>{text}</p>
-          <p>Create by user id: {userId}</p>
-          <br/>
-          <p>Available to: {access}</p>
-          <p>Create date: {dataCreate}</p>
-          <p>Edit date: {dataEdit}</p>
-          <Link to={`${id}/edit`}>
-            <Button title={"Edit"} />
-          </Link>
-          
-        </div> </> : 
-        <Redirect to='/404' component={NotFound}/> 
+          <h1>Single Article page: {title}</h1>
+          <div className="article__block">
+            <h2>{id}. {title} </h2> 
+            <p>{text}</p>
+            <p>Create by user id: {userId}</p>
+            <br/>
+            <p>Available to: {access}</p>
+            <p>Create date: {dataCreate}</p>
+            <p>Edit date: {dataEdit}</p>
+            <AddEditArticlesBtn isCreate={false} id={id} />
+          </div> 
+        </> 
+        : <Redirect to='/404' component={NotFound}/> 
       }
     </div>
   );

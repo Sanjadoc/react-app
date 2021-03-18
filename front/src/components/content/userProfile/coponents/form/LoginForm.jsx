@@ -1,6 +1,8 @@
 import './LoginForm.scss';
 
+import { Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import SendIcon from '@material-ui/icons/Send';
 
 function LoginForm({setUserHook}) {
 
@@ -14,7 +16,7 @@ function LoginForm({setUserHook}) {
                 <input type="text" name="lastName" maxLength="60" autoComplete="off" required/>
                 {/* <label>Pass:</label>
                 <input type="password" name="pass" required/> */}
-                <button type="submit">Submit</button>
+                <Button variant="contained" color="primary" aria-label="Submit" type="submit" endIcon={<SendIcon/>}>Submit</Button>
             </form>
         </div>
     );
