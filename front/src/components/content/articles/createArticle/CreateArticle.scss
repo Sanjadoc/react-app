@@ -6,6 +6,9 @@
     line-height: 1.5rem;
     padding: 1.25rem;
     box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1);
+    h2 {
+        font-weight: 600;
+    }
     &__form {
         label, input {
             display: flex;

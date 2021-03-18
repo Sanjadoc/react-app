@@ -2,7 +2,8 @@ import "./Header.scss";
 
 import { Link, NavLink } from "react-router-dom";
 
-import Button from "./components/button/Button";
+import AddEditArticlesBtn from "../../containers/articles/singleArticle/AddEditArticlesBtn";
+import { Button } from "@material-ui/core";
 import Logo from "./components/logo/Logo";
 import PropTypes from "prop-types";
 import UserNav from "./components/userNav/UserNav";
@@ -13,13 +14,11 @@ function Header({user}) {
         <Link to='/' component={Logo} />
         <div className="header__nav">
           <NavLink exact to="/articles" activeClassName="active">
-            <Button title={"Articles"} />
+            <Button variant="contained" color="primary" aria-label="Articles">Articles</Button>
           </NavLink>
-          <NavLink  to='/articles/add' activeClassName="active">
-            <Button title={"Add article"} />
-          </NavLink>
+          <AddEditArticlesBtn isCreate={true} />
           <NavLink  to="/profile" activeClassName="active">
-            <Button title={`Profile ${user ? ": "+user : ""}`} />
+            <Button variant="contained" color="primary" aria-label="Profile">{`Profile ${user ? ": "+user : ""}`}</Button>
           </NavLink>
         </div>  
         <UserNav name={user}/>

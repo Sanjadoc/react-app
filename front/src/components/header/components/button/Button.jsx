@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 function Button({title, typeBtn, onClick, disabled}) {
     return (
-        <button className="header__btn" type={typeBtn} onClick={onClick} disabled={disabled}>{title}</button>
+        <button className="btn" type={typeBtn} onClick={onClick} disabled={disabled}>{title}</button>
     );
 }
 
