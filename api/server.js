@@ -13,8 +13,12 @@ const userRouters = require("./routes/userRouter");
 const postRouters = require("./routes/postsRouter");
 const authRoutes = require("./routes/authRouter");
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ 
+  extended: true,
+  limit: "20mb",
+  parameterLimit: 20000,
+ }));
+app.use(bodyParser.json({limit:"20mb"}));
 // app.use(express.json());
 app.use(passport.initialize());
 

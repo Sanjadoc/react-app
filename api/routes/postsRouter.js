@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { checkAuth, checkOwnerData } = require("../middleware/acl");
 const validator = require("../middleware/validator");
 const postController = require("../controllers/postController");
-const config = require("../config.entities");
+const config = require("../config");
 
 router.get("/", postController.getAllPosts);
 router.get("/:id", postController.getOnePost);
