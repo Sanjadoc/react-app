@@ -3,8 +3,32 @@ const db = require("../services/db");
 class User {
   static tableName = "users";
 
+  static async getAllUsers() {
+    return db.select().from(User.tableName).orderBy("id");
+  }
+
   static async createUser(user) {
     return db(User.tableName).insert({ ...user });
+  }
+
+  static async updateUserById(userId, newUserData) {
+    return db(User.tableName)
+      .where("id", "=", userId)
+      .update({
+        email: newUserData.email,
+        password: newUserData.password,
+        first_name: newUserData.first_name,
+        last_name: newUserData.last_name,
+        age: newUserData.age,
+        university: newUserData.university,
+        phone_number: newUserData.phone_number,
+        data: newUserData.data,
+        work_place: newUserData.work_place,
+      });
+  }
+
+  static async deleteUserById(userID) {
+    return db(User.tableName).where("id", "=", userID).delete();
   }
 
   static async findByEmail(email) {
@@ -34,6 +58,7 @@ class User {
       .where("id", "=", userId)
       .update({ active: "true" });
   }
+  
 }
 
 module.exports = User;
