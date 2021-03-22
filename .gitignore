@@ -39,3 +39,4 @@
 /api/yarn-debug.log*
 /api/yarn-error.log*
 
+/api/uploads
