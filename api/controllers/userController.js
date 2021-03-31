@@ -57,6 +57,7 @@ class userController {
 
   async updateAvatar(req, res) {
     const { id } = req.params;
+    console.log(req.file.filename);
     const user = await User.findById(id);
     if (user) {
       try {

@@ -4,6 +4,7 @@ import {Route, Switch} from 'react-router-dom'
 
 import ArticlesListContainer from '../../containers/articles/ArticlesList';
 import Home from "./home/Home"
+import LoginPageContainer from '../../containers/loginPage/LoginPage';
 import NotFound from './404/NotFound';
 import PropTypes from 'prop-types';
 import SingleArticleContainer from '../../containers/articles/singleArticle/SingleArticle';
@@ -19,7 +20,10 @@ function Content({setUserHook, userData}) {
         </Route>
         <Route exact sensitive path="/articles/:id" render = { propsRoute => <SingleArticleContainer routes={propsRoute} /> } />
         <Route exact path="/profile">
-          <UserProfile setUserHook={setUserHook} userData={userData}/>
+          <UserProfile/>
+        </Route>
+        <Route exact path="/login">
+          <LoginPageContainer setUserHook={setUserHook}/>
         </Route>
          <Route component={NotFound} />
       </Switch>

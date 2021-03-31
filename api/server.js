@@ -2,6 +2,7 @@ require("dotenv").config();
 const host = process.env.HOST;
 const port = process.env.PORT;
 
+const cors = require("cors");
 const express = require("express");
 const app = express();
 
@@ -19,16 +20,25 @@ app.use(bodyParser.urlencoded({
   parameterLimit: 20000,
  }));
 app.use(bodyParser.json({limit:"20mb"}));
-// app.use(express.json());
+app.use(express.json());
 app.use(passport.initialize());
 
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, PUT, PATCH, POST, DELETE");
-  res.header("Access-Control-Allow-Headers", "X-PINGOTHER, Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-  res.header("Access-Control-Max-Age", "86400");
-  next();
-});
+// app.use(function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Methods", "GET, PUT, PATCH, POST, DELETE");
+//   res.header("Access-Control-Allow-Headers", "X-PINGOTHER, Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+//   res.header("Access-Control-Max-Age", "86400");
+//   next();
+// });
+
+app.use(cors(
+  {
+      "origin": ["http://localhost:3001"],
+      "methods": "GET,PUT,POST,DELETE",
+      "optionsSuccessStatus": 200
+  }
+));
+
 
 app.use(authRequest);
 

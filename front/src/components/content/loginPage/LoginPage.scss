@@ -1,0 +1,13 @@
+.login-page {
+    &__sign-in{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: baseline;
+        .actions{
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.25rem;
+        }
+    }
+}
