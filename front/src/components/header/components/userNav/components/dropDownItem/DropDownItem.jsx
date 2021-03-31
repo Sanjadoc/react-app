@@ -2,10 +2,10 @@ import './DropDownItem.scss';
 
 import { Link } from 'react-router-dom';
 
-function DropDownItem() {
+function DropDownItem({ifUser}) {
     return (
         <div className="header__user__drop">
-         <Link to='/profile'>Profile</Link>
+         {ifUser ? <Link to='/profile'>Profile</Link> : <Link to='/login'>Login</Link>}
          <Link to='/'>Logout</Link>
         </div>
     );

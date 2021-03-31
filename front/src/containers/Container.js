@@ -18,9 +18,7 @@ function Container() {
   return (
     <div className="container">
       <Header user={user} />
-      <Content
-        setUserHook={setUserHook}
-      />
+      <Content setUserHook={setUserHook} />
       <Footer />
     </div>
   );

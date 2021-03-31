@@ -1,88 +1,227 @@
-import "./UserProfile.scss";
+import 'cropperjs/dist/cropper.css'
+import './UserProfile.scss'
 
-import LoginForm from "./coponents/form/LoginForm";
-import PropTypes from "prop-types";
-import SocialButton from "./coponents/socialButton/SocialButton";
-import axios from "axios";
+import * as Yup from 'yup'
+
+import { Field, Form, Formik } from 'formik'
+import { sendAvatar, updateProfile, } from '../../../containers/users/hooks/apiUser'
+import { useCallback, useState } from 'react'
+
+import Button from '@material-ui/core/Button'
+import Cropper from 'react-cropper'
+import SendIcon from '@material-ui/icons/Send';
+import { useMutation } from 'react-query'
 
 function UserProfile({ setUserHook }) {
+  const [image, setImage] = useState();
+  const [cropper, setCropper] = useState();
+  const [croppedImage, setCroppedImage] = useState();
 
-  const { REACT_APP_GOOGLE_APP_ID, REACT_APP_FACEBOOK_APP_ID } = process.env;
+  const { mutate: editUser } = useMutation(updateProfile);
+  const { mutate: updateAvatar } = useMutation(sendAvatar);
 
-  const postLinkGoogle = "http://localhost:3000/auth/social/google";
-  const postLinkFacebook = "http://localhost:3000/auth/social/facebook";
+  const userSchema = Yup.object().shape({
+    email: Yup.string()
+      .min(10, 'Too Short!')
+      .max(200, 'Too Long!')
+      .required('Required, need add information'),
+    password: Yup.string()
+      .min(4, 'Too Short!')
+      .max(25, 'Too Long!')
+      .required('Required, need add information'),
+    first_name: Yup.string()
+      .min(1, 'Too Short!')
+      .max(100, 'Too Long!')
+      .required('Required, need add information'),
+    last_name: Yup.string()
+      .min(1, 'Too Short!')
+      .max(100, 'Too Long!')
+      .required('Required, need add information'),     
+    age: Yup.number()
+      .min(5, 'Too Short!')
+      .max(150, 'Too Long!'),
+    university: Yup.string()
+      .min(1, 'Too Short!')
+      .max(200, 'Too Long!'),
+    phone_number: Yup.string()
+      .min(1, 'Too Short!')
+      .max(25, 'Too Long!'),
+    work_place: Yup.string()
+      .min(1, 'Too Short!')
+      .max(100, 'Too Long!'),
+  })
 
-  const handleSocialLogin = (user) => {
-    console.log("handleSocialLogin user: ", user);
+  ///need get user id from back
+  const userId = 45;
 
-    if (user._provider === "google") {
-      // console.log("userGoogleData", user);
-      // console.log("accessGoogleToken: ", user._token.accessToken);
-      axios
-        .post(postLinkGoogle, user)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+  const onSubmit = useCallback(
+    async (sendData) => {
+      try {
+        await editUser({ userId, sendData })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    [editUser]
+  )
+
+  const onSaveImage = useCallback(
+    async (sendData) => {
+      try {
+        await updateAvatar({ userId, sendData })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    [updateAvatar]
+  )
+
+  const handleSaveImage = () => {
+    onSaveImage({ avatar: croppedImage })
+  }
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    if (file.type.match('image.*') && file.size < 20000) {
+        const reader = new FileReader();
+        reader.onload = () => {
+            setImage(reader.result);
+        };
+        reader.readAsDataURL(file);
+    } else {
+        console.log('Error load!');
     }
+  }
 
-    if (user._provider === "facebook") {
-      // console.log("userFacebookData", user);
-      // console.log("accessFacebookToken: ", user._token.accessToken);
-      axios
-        .post(postLinkFacebook, user)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+  const cropImage = () => {
+    if (cropper !== 'undefined') {
+      setCroppedImage(cropper.getCroppedCanvas().toDataURL())
     }
-  };
+  }
 
-  const handleSocialLoginFailure = (err) => {
-    console.error(err);
-    // window.location.reload();
-  };
+  const handleSubmit = (data) => {
+    onSubmit({ ...data, avatar: croppedImage })
+  }
 
   return (
-    <div className="user-profile">
+    <div className='profile'>
       <h1>User profile page</h1>
+      <div className='profile-edit'>
 
-      <div className="user-profile__sign-in">
-        <LoginForm setUserHook={setUserHook} />
-      <div className="user-profile__sign-in actions">
-        <h3>Social Login</h3>
-        <SocialButton
-          className="social-btn google"
-          provider="google"
-          appId={REACT_APP_GOOGLE_APP_ID}
-          onLoginSuccess={handleSocialLogin}
-          onLoginFailure={handleSocialLoginFailure}
+        <div className="profile-edit__avatar">
+          <h2>Upload avatar:</h2>
+          {!croppedImage && (
+            <Button variant='contained' color="primary" component='label'>
+              Upload avatar
+              <input onChange={handleChange} hidden type='file' name='avatar' />
+            </Button>
+          )}
+          {image && !croppedImage && (
+            <Cropper
+              src={image}
+              initialAspectRatio={4 / 4}
+              onInitialized={(instance) => setCropper(instance)}
+            />
+          )}
+          {image && !croppedImage && (
+            <Button variant="contained" color="primary"onClick={cropImage}>
+              Crop
+            </Button>
+  
+          )}
+          {croppedImage && <img src={croppedImage} alt='cropped' />}
+          {croppedImage && (
+            <Button variant='contained' color="primary" onClick={handleSaveImage}>
+              Save
+            </Button>
+          )}
+        </div>  
+
+        <Formik
+          validationSchema={userSchema}
+          initialValues={{
+            email: '',
+            password: '',
+            first_name: '',
+            last_name: '',
+            age: '',
+            university: '',
+            phone_number: '',
+            work_place: ''
+          }}
+          onSubmit={handleSubmit}
         >
-          Sign in with Google
-        </SocialButton>
-        <br />
-        <SocialButton
-          className="social-btn facebook"
-          provider="facebook"
-          appId={REACT_APP_FACEBOOK_APP_ID}
-          onLoginSuccess={handleSocialLogin}
-          onLoginFailure={handleSocialLoginFailure}
-        >
-          Sign in with Facebook
-        </SocialButton>
-        </div>
+          {({ errors, touched }) => (
+            <Form className='profile-edit__form'>
+              <div>
+                <label htmlFor='email'>Change email:</label>
+                <Field id='email' type="email" name='email' placeholder='Enter new email...' />
+                {errors.email && touched.email ? <div className="error">{errors.email}</div> : null}
+              </div>
+
+              <div>
+                <label htmlFor='password'>Change password:</label>
+                <Field
+                  id='password'
+                  name='password'
+                  type="password"
+                  placeholder='Enter new password...'
+                />
+                {errors.password && touched.password ? (<div className="error">{errors.password}</div>) : null}
+              </div>
+
+              <div>
+                <label htmlFor='first_name'>Change name:</label>
+                <Field id='first_name' name='first_name' placeholder='Enter new name...' />
+                {errors.first_name && touched.first_name ? <div className="error">{errors.first_name}</div> : null}
+              </div>
+
+              <div>
+                <label htmlFor='last_name'>Change surname:</label>
+                <Field id='last_name' name='last_name' placeholder='Enter new surname...'
+                />
+                {errors.last_name && touched.last_name ? (<div className="error">{errors.last_name}</div>) : null}
+              </div>
+              
+              <div>
+                <label htmlFor='age'>Change age:</label>
+                <Field id='age' name='age' placeholder='Enter age...'
+                />
+                {errors.age && touched.age ? (<div className="error">{errors.age}</div>) : null}
+              </div>
+              
+              <div>
+                <label htmlFor='university'>Change university:</label>
+                <Field id='university' name='university' placeholder='Enter university...'
+                />
+                {errors.university && touched.university ? (<div className="error">{errors.university}</div>) : null}
+              </div>
+              
+              <div>
+                <label htmlFor='phone_number'>Change phone number:</label>
+                <Field id='phone_number' name='phone_number' placeholder='Enter phone number...'
+                />
+                {errors.phone_number && touched.phone_number ? (<div className="error">{errors.phone_number}</div>) : null}
+              </div>
+              
+              <div>
+                <label htmlFor='work_place'>Change work place:</label>
+                <Field id='work_place' name='work_place' placeholder='Enter work place...'
+                />
+                {errors.work_place && touched.work_place ? (<div className="error">{errors.work_place}</div>) : null}
+              </div>            
+              
+              <Button variant="contained" color="primary" aria-label="Submit" type="submit" endIcon={<SendIcon />}>Submit</Button>
+            </Form>
+          )}
+        </Formik>
+
+        
       </div>
     </div>
-  );
+  )
 }
 
-UserProfile.propType = {
-  setUserHook: PropTypes.func.isRequired
-}
+export default UserProfile
 
-
-export default UserProfile;
