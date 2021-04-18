@@ -7,31 +7,37 @@ import { Button } from "@material-ui/core";
 import Logo from "./components/logo/Logo";
 import PropTypes from "prop-types";
 import UserNav from "./components/userNav/UserNav";
+import { userDataType } from '../content/userProfile/userType/userType';
 
-function Header({user}) {
+function Header({user, handleLogout}) {
     return (
       <header className="header"> 
         <Link to='/' component={Logo} />
-        <div className="header__nav">
-          <NavLink exact to="/articles" activeClassName="active">
-            <Button variant="contained" color="primary" aria-label="Articles">Articles</Button>
-          </NavLink>
-          <AddEditArticlesBtn isCreate={true} />
-          <NavLink  to="/profile" activeClassName="active">
-            <Button variant="contained" color="primary" aria-label="Profile">{`Profile ${user ? ": "+user : ""}`}</Button>
-          </NavLink>
-        </div>  
-        <UserNav name={user}/>
+        {user &&
+          <div className="header__nav">
+            <NavLink exact to="/articles" activeClassName="active">
+              <Button variant="contained" color="primary" aria-label="Articles">Articles</Button>
+            </NavLink>
+            <AddEditArticlesBtn isCreate={true} />
+            <NavLink  to="/profile" activeClassName="active">
+              <Button variant="contained" color="primary" aria-label="Profile">{`Profile ${user ? ": "+user.first_name : ""}`}</Button>
+            </NavLink>
+          </div>  
+        }
+        {!user &&
+          <div className="header__nav">
+            <Link to={"/login"}>
+              <Button variant="contained" color="primary" aria-label="Articles">Login/registretion</Button>
+            </Link>
+          </div>
+        }
+        {user && <UserNav user={user} handleLogout={handleLogout}/> }
       </header>
     );
 }
 
-Header.propTypes = {
-  user: PropTypes.string
-}
-
-Header.defaultProps = {
-  user: ""
-}
+// Header.propTypes = {
+//   user: PropTypes.arrayOf(userDataType),
+// }
 
 export default Header;

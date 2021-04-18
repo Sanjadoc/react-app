@@ -11,8 +11,17 @@ import Button from '@material-ui/core/Button'
 import Cropper from 'react-cropper'
 import SendIcon from '@material-ui/icons/Send';
 import { useMutation } from 'react-query'
+import useRequireAuth from '../../../containers/users/hooks/useRequireAuth'
+import useAuth from '../../../containers/users/hooks/useAuth'
 
-function UserProfile({ setUserHook }) {
+function UserProfile() {
+
+  useRequireAuth(false);
+
+  const { user } = useAuth();
+  const userId =user?.id;
+  console.log("user from jsx userProfile", user);
+
   const [image, setImage] = useState();
   const [cropper, setCropper] = useState();
   const [croppedImage, setCroppedImage] = useState();
@@ -50,9 +59,6 @@ function UserProfile({ setUserHook }) {
       .min(1, 'Too Short!')
       .max(100, 'Too Long!'),
   })
-
-  ///need get user id from back
-  const userId = 45;
 
   const onSubmit = useCallback(
     async (sendData) => {
@@ -141,14 +147,14 @@ function UserProfile({ setUserHook }) {
         <Formik
           validationSchema={userSchema}
           initialValues={{
-            email: '',
-            password: '',
-            first_name: '',
-            last_name: '',
-            age: '',
-            university: '',
-            phone_number: '',
-            work_place: ''
+            email: user?.email || "",
+            password: user?.password || "",
+            first_name: user?.first_name || "",
+            last_name: user?.last_name || "",
+            age: user?.age || "",
+            university:user?.university || "",
+            phone_number: user?.phone_number || "",
+            work_place: user?.work_place || "",
           }}
           onSubmit={handleSubmit}
         >
@@ -215,9 +221,7 @@ function UserProfile({ setUserHook }) {
               <Button variant="contained" color="primary" aria-label="Submit" type="submit" endIcon={<SendIcon />}>Submit</Button>
             </Form>
           )}
-        </Formik>
-
-        
+        </Formik>       
       </div>
     </div>
   )

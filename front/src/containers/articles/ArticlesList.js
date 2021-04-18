@@ -3,8 +3,12 @@ import { Redirect } from "react-router-dom";
 import { getArticlesList } from "./hooks/apiArticles";
 import { useQuery } from "react-query";
 import { useState } from "react";
+import useRequireAuth from "../users/hooks/useRequireAuth";
 
 function ArticlesListContainer() {
+  
+  useRequireAuth(false);
+
   const [limit, setLimitLoad] = useState(2);
 
   const { data: res, isFetching } = useQuery(["posts", limit], () => getArticlesList({ limit }));

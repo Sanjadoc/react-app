@@ -1,9 +1,9 @@
 import LoginPage from "../../components/content/loginPage/LoginPage";
 
-function LoginPageContainer({setUserHook}) {
+function LoginPageContainer() {  
     return (
     <>
-      <LoginPage setUserHook={setUserHook} />
+      <LoginPage />
     </>
   );  
 }

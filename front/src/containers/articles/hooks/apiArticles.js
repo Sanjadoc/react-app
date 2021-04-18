@@ -15,3 +15,7 @@ export const createArticle = async({ sendData }) => {
 export const updateArticle = async ({ articleId, sendData }) => {
   return apiClient.put(`/posts/${articleId}/update`, sendData);
 }
+
+export const delArticle = async ({ articleId }) => {
+  return apiClient.delete(`/posts/${articleId}/delete`);
+}

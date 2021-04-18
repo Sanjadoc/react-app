@@ -27,7 +27,7 @@ class userController {
     try {
       const userData = {
         email: req.body.email,
-        password: bcrypt.hashSync(req.body.email, 10),
+        password: bcrypt.hashSync(req.body.password ? req.body.password : req.body.email, 10),
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         age: req.body.age,

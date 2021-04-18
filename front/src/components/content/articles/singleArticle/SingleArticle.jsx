@@ -5,13 +5,11 @@ import NotFound from '../../404/NotFound';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { articleDataType } from '../articlesType/articlesType';
-
-// import Button from '../../../header/components/button/Button';
-
-
-
-
+import useAuth from '../../../../containers/users/hooks/useAuth';
+import DeleteArticleBtn from '../../../../containers/articles/singleArticle/DeleteArticleBtn';
 function SingleArticle(data) {
+
+  const { user } = useAuth();
   
   const articleData = data?.articlesData;
   const {id, title, text, userId, access, dataCreate, dataEdit} = articleData;
@@ -30,7 +28,9 @@ function SingleArticle(data) {
             <p>Available to: {access}</p>
             <p>Create date: {dataCreate}</p>
             <p>Edit date: {dataEdit}</p>
-            <AddEditArticlesBtn isCreate={false} id={id} />
+            {user.id===userId && <AddEditArticlesBtn isCreate={false} id={id}/>}
+            <p></p>
+            {user.id===userId && <DeleteArticleBtn articleId={id}/>}
           </div> 
         </> 
         : <Redirect to='/404' component={NotFound}/> 
