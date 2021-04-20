@@ -1,9 +1,9 @@
 import './UserNav.scss';
 
 import DropDownItem from './components/dropDownItem/DropDownItem';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import userPlaceholder from './user-placeholder.svg';
-import { userType } from '../../../content/userProfile/userType/userType';
+// import { userType } from '../../../content/userProfile/userType/userType';
 
 function UserNav({user, handleLogout}) {
     

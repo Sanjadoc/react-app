@@ -1,8 +1,8 @@
 import './DropDownItem.scss';
 
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { userType } from '../../../../../content/userProfile/userType/userType';
+// import PropTypes from 'prop-types';
+// import { userType } from '../../../../../content/userProfile/userType/userType';
 
 function DropDownItem({user, handleLogout}) {
     return (

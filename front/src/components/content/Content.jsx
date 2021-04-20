@@ -1,6 +1,6 @@
 import './Content.scss';
 
-import {Redirect, Route, Switch} from 'react-router-dom'
+import {Route, Switch} from 'react-router-dom'
 
 import ArticlesListContainer from '../../containers/articles/ArticlesList';
 import Home from "./home/Home"

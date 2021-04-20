@@ -9,7 +9,7 @@ export const getOneArticle = async ({ articleId }) => {
 }
 
 export const createArticle = async({ sendData }) => {
-  return apiClient.post('/posts', sendData);
+  return apiClient.post('/posts/create', sendData);
 }
 
 export const updateArticle = async ({ articleId, sendData }) => {

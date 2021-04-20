@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react'
 
 function AddEditArticlesBtn({ isCreate,  id }) {
-   const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
   

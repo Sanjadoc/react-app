@@ -7,12 +7,8 @@ import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { articlesDataType } from './articlesType/articlesType';
-import useAuth from '../../../containers/users/hooks/useAuth';
 
-function Articles({articlesData, isFetching , submitLimit}) {
-
-  const { user } = useAuth();
-
+function Articles({articlesData, isFetching , submitLimit, user}) {
   return (
     <div className="articles">
       <h1>Articles list page</h1>

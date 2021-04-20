@@ -10,12 +10,11 @@ import { Link } from "react-router-dom";
 import SendIcon from "@material-ui/icons/Send";
 import SocialButton from "./coponents/socialButton/SocialButton";
 import axios from "axios";
-import useAuth from "../../../containers/users/hooks/useAuth";
 import { useCallback } from "react";
 import { useMutation } from "react-query";
 import useRequireAuth from "../../../containers/users/hooks/useRequireAuth";
 
-function LoginPage() {
+function LoginPage({login}) {
   const { REACT_APP_GOOGLE_APP_ID, REACT_APP_FACEBOOK_APP_ID, REACT_APP_SERVER_API_URL } = process.env;
 
   const postLinkGoogle = `${REACT_APP_SERVER_API_URL}/auth/social/google`;
@@ -23,7 +22,9 @@ function LoginPage() {
 
    // Login
    useRequireAuth(true);
-   const { login } = useAuth();
+   
+  //  const { login } = useAuth();
+  // console.log(login);
  
    const mutation = useMutation(login);
  

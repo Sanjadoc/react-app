@@ -4,27 +4,36 @@ import './UserProfile.scss'
 import * as Yup from 'yup'
 
 import { Field, Form, Formik } from 'formik'
-import { sendAvatar, updateProfile, } from '../../../containers/users/hooks/apiUser'
 import { useCallback, useState } from 'react'
 
 import Button from '@material-ui/core/Button'
 import Cropper from 'react-cropper'
 import SendIcon from '@material-ui/icons/Send';
+import { sendAvatar } from '../../../containers/users/hooks/apiUser'
+import useApi from '../../../containers/users/hooks/useApi'
 import { useMutation } from 'react-query'
-import useRequireAuth from '../../../containers/users/hooks/useRequireAuth'
-import useAuth from '../../../containers/users/hooks/useAuth'
 
-function UserProfile() {
+function UserProfile({user}) {
 
-  useRequireAuth(false);
+  const { callApi } = useApi();
 
-  const { user } = useAuth();
   const userId =user?.id;
+
   console.log("user from jsx userProfile", user);
 
   const [image, setImage] = useState();
   const [cropper, setCropper] = useState();
   const [croppedImage, setCroppedImage] = useState();
+
+  const updateProfile = ({ userId, sendData }) => {
+    return callApi(
+      {
+        url: `/user/${userId}/update`,
+        method: "PUT",
+        data: {sendData}
+      }
+    );
+  }
 
   const { mutate: editUser } = useMutation(updateProfile);
   const { mutate: updateAvatar } = useMutation(sendAvatar);
