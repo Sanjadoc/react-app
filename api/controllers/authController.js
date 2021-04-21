@@ -1,12 +1,15 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const { v4: uuidv4, validate } = require("uuid");
+const moment = require("moment");
 
 const passport = require("../services/auth/passport");
 const jwt = require("jsonwebtoken");
 const mailSender = require("../services/mailSender");
+const { generateTokens } = require("../services/auth/generateTokens");
 
 class AuthController {
+
   async login(req, res, next) {
     passport.authenticate(
       "local",
@@ -20,16 +23,12 @@ class AuthController {
           throw new Error(trace.message || "Authentication error");
         }
 
-        const token = jwt.sign(
-          { id: user.id, email: user.email },
-          process.env.JWT_SECRET,
-          {
-            expiresIn: "3h",
-            audience: process.env.HOST,
-          },
-        );
-
-        res.send({ token });
+        const tokens = await generateTokens(user);
+        await User.updateRefreshToken(user.id, tokens.refresh.token);
+        
+        const userInfo = await User.getUserData(tokens.refresh.token);
+        
+        res.send({ userInfo, tokens });
       },
     )(req, res, next);
   }
@@ -207,15 +206,17 @@ class AuthController {
   }
 
   async logout(req, res, next) {
-    const { email } = req.body;
     try {
-      await User.deleteToken(email);
-      req.logout();
+      const { email, refreshToken } = req.body;
+      // await User.deleteToken(email);
+      await User.deleteRefreshToken(refreshToken);
+      res.status(200).send("You logout!");
       res.redirect("/");
     } catch (error) {
-      return next(res.status(400).send(`Not delete userToken - ${error}`));
+      return next(res.status(400).send(`Same problem with logout - ${error}`));
     }
   }
+
 }
 
 module.exports = new AuthController();

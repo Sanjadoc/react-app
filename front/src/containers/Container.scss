@@ -7,3 +7,11 @@
     position: relative;
     box-shadow: 0 0 10px rgba(0,0,0,0.1); 
 }
+
+.loader {
+    text-align: center;
+    div {
+        display: flex;
+        flex-direction: column;
+    }
+}

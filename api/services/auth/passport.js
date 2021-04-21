@@ -24,7 +24,10 @@ passport.use(
           return done(null, false, { message: "User email is not verified" });
         }
 
-        const pwdMatch = await bcrypt.compare(password, user.password);
+        const passwordEnterTrim = password.trim();
+        const passwordDBTrim = user.password.trim();
+
+        const pwdMatch = await bcrypt.compare(passwordEnterTrim, passwordDBTrim);
 
         if (!pwdMatch) {
           return done(null, false, { message: "Password doesn't match" });

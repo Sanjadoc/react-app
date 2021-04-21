@@ -9,9 +9,13 @@ export const getOneArticle = async ({ articleId }) => {
 }
 
 export const createArticle = async({ sendData }) => {
-  return apiClient.post('/posts', sendData);
+  return apiClient.post('/posts/create', sendData);
 }
 
 export const updateArticle = async ({ articleId, sendData }) => {
   return apiClient.put(`/posts/${articleId}/update`, sendData);
+}
+
+export const delArticle = async ({ articleId }) => {
+  return apiClient.delete(`/posts/${articleId}/delete`);
 }

@@ -39,6 +39,20 @@ class User {
     return db.select().from(User.tableName).where({ id }).first();
   }
 
+  //all for user auth token
+  static async updateRefreshToken(userId, refreshToken) {
+    return db(User.tableName).where("id", "=", userId).update({ refreshToken });
+  }
+
+  static async getUserData(refreshToken) {
+    return db.select().from(User.tableName).where({ refreshToken }).first();
+  }
+
+  static async deleteRefreshToken(refreshToken) {
+    return db(User.tableName).where({refreshToken}).update({ refreshToken: "" });
+  }
+
+  //all for email activate
   static async updateToken(user) {
     return db(User.tableName)
       .where("id", "=", user.id)

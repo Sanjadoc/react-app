@@ -1,13 +1,14 @@
 import './Articles.scss';
 
 import AddEditArticlesBtn from '../../../containers/articles/singleArticle/AddEditArticlesBtn';
+import DeleteArticleBtn from '../../../containers/articles/singleArticle/DeleteArticleBtn';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { articlesDataType } from './articlesType/articlesType';
 
-function Articles({articlesData, isFetching , submitLimit}) {
+function Articles({articlesData, isFetching , submitLimit, user}) {
   return (
     <div className="articles">
       <h1>Articles list page</h1>
@@ -25,7 +26,9 @@ function Articles({articlesData, isFetching , submitLimit}) {
             <p>Create date: {item.dataCreate}</p>
             <p>Edit date: {item.dataEdit}</p>
           </Link>
-          <AddEditArticlesBtn isCreate={false} id={item.id} />
+          {user.id===item.userId && <AddEditArticlesBtn isCreate={false} id={item.id} />}
+          <p></p>
+          {user.id===item.userId && <DeleteArticleBtn articleId={item.id}/>}
           </div>
         )) }
       </div>
