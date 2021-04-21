@@ -1,14 +1,40 @@
 import React, { useCallback } from 'react';
-import { createArticle, getOneArticle, updateArticle } from '../hooks/apiArticles';
+import { createArticle, updateArticle } from '../api/apiArticles';
 import { useMutation, useQuery } from 'react-query';
 
 import { AccessArticles } from '../../../components/content/articles/constants/AccessArticles';
 import CreateArticle from '../../../components/content/articles/createArticle/CreateArticle';
 import PropTypes from 'prop-types';
+import useApi from '../../users/hooks/useApi';
+import useAuth from '../../users/hooks/useAuth';
 
 function CreateArticleContainer({ articleId, isOpen, handleClose }) {
-    const { data: res, isFetching } = useQuery(["posts", articleId], () => getOneArticle({ articleId }),{ enabled: !!articleId });
-    const articleData = res?.data || { title: "", text: "", access: AccessArticles.ALL, userId: 45 };
+    
+    const { callApi } = useApi();
+
+    const { user } = useAuth();
+    
+    const { data: res, isFetching } = useQuery(["posts", articleId], () => callApi(`/posts/${articleId}`),{ enabled: !!articleId });
+    const articleData = res || { title: "", text: "", access: AccessArticles.ALL, userId: user.id };
+
+    const updateArticle = ({ articleId, sendData }) => {
+        return callApi(
+            {
+				url: `/posts/${articleId}/update`,
+				method: "PUT",
+				data: {sendData}
+			}
+        );
+    }
+    const createArticle = ({ sendData }) => {
+        return callApi(
+            {
+				url: `/posts/create`,
+				method: "POST",
+				sendData: {sendData}
+			}
+        );
+    }
 
     const { mutate: updatePost } = useMutation(updateArticle);
     const { mutate: createPost } = useMutation(createArticle);

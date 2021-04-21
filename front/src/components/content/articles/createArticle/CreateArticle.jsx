@@ -2,11 +2,10 @@ import "./CreateArticle.scss";
 
 import * as Yup from "yup";
 
-import { Button, IconButton } from "@material-ui/core";
 import { Field, Form, Formik } from "formik";
 
 import { AccessArticles } from "../constants/AccessArticles";
-import { AccountCircle } from "@material-ui/icons";
+import { Button } from "@material-ui/core";
 import Cropper from "react-cropper";
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -20,28 +19,28 @@ function CreateArticle({ articleData, onSubmit, edit, isOpen, handleClose }) {
   const { title, text, access, userId } = articleData;
 
   const [image, setImage] = useState();
-    const [croppedImage, setCroppedImage] = useState();
-    const [cropper, setCropper] = useState();
+  const [croppedImage, setCroppedImage] = useState();
+  const [cropper, setCropper] = useState();
 
-    const handleChange = e => {
-        e.preventDefault();
-        const file = e.target.files[0];
-        if (file.type.match('image.*') && file.size < 20000) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                setImage(reader.result);
-            };
-            reader.readAsDataURL(file);
-        } else {
-            console.log('Error Load');
-        }
-    };
+  const handleChange = e => {
+      e.preventDefault();
+      const file = e.target.files[0];
+      if (file.type.match('image.*') && file.size < 20000) {
+          const reader = new FileReader();
+          reader.onload = () => {
+              setImage(reader.result);
+          };
+          reader.readAsDataURL(file);
+      } else {
+          console.log('Error Load');
+      }
+  };
 
-    const cropImage = () => {
-        if (typeof cropper !== 'undefined') {
-            setCroppedImage(cropper.getCroppedCanvas().toDataURL());
-        }
-    };
+  const cropImage = () => {
+      if (typeof cropper !== 'undefined') {
+          setCroppedImage(cropper.getCroppedCanvas().toDataURL());
+      }
+  };
 
   const articleSchema = Yup.object().shape({
     title: Yup.string()

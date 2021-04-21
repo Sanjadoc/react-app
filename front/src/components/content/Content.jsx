@@ -6,11 +6,10 @@ import ArticlesListContainer from '../../containers/articles/ArticlesList';
 import Home from "./home/Home"
 import LoginPageContainer from '../../containers/loginPage/LoginPage';
 import NotFound from './404/NotFound';
-import PropTypes from 'prop-types';
 import SingleArticleContainer from '../../containers/articles/singleArticle/SingleArticle';
-import UserProfile from "./userProfile/UserProfile";
+import UserProfile from "../../containers/users/userProfile/UserProfile";
 
-function Content({setUserHook, userData}) {
+function Content() {
   return (
     <div className="content">
       <Switch>
@@ -23,17 +22,12 @@ function Content({setUserHook, userData}) {
           <UserProfile/>
         </Route>
         <Route exact path="/login">
-          <LoginPageContainer setUserHook={setUserHook}/>
+          <LoginPageContainer/>
         </Route>
          <Route component={NotFound} />
       </Switch>
     </div>
   );
-}
-
-Content.propType = {
-  setUserHook: PropTypes.func.isRequired,
-  userData: PropTypes.func.isRequired
 }
 
 export default Content;

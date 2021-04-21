@@ -1,15 +1,22 @@
 import './DropDownItem.scss';
 
 import { Link } from 'react-router-dom';
+// import PropTypes from 'prop-types';
+// import { userType } from '../../../../../content/userProfile/userType/userType';
 
-function DropDownItem({ifUser}) {
+function DropDownItem({user, handleLogout}) {
     return (
         <div className="header__user__drop">
-         {ifUser ? <Link to='/profile'>Profile</Link> : <Link to='/login'>Login</Link>}
-         <Link to='/'>Logout</Link>
+         {user ? <Link to='/profile'>Profile</Link> : <Link to='/login'>Login</Link>}
+         {user && <Link to='/' onClick={handleLogout}>Logout</Link>}
         </div>
     );
 }
+
+
+// DropDownItem.propTypes = {
+//     user: PropTypes.arrayOf(userType),
+// }
 
 export default DropDownItem;
 

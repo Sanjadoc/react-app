@@ -14,7 +14,7 @@ router.post("/registration",[
         password: ["required", "min:8", "max:50"],
     }), authController.registration]);
 router.get("/verify/:token", authController.emailVerify);
-router.get("/logout", authController.logout);
+router.post("/logout", authController.logout);
 
 router.post("/social/google", authController.google);
 router.post("/social/facebook", authController.facebook);

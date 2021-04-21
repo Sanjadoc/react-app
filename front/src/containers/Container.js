@@ -1,24 +1,59 @@
 import "./Container.scss";
 
-import React, { useState } from "react";
+import { CircularProgress, Grid } from "@material-ui/core";
+import React, { useCallback, useEffect } from "react";
 
 import Content from "../components/content/Content";
 import Footer from "../components/footer/Footer";
 import Header from "../components/header/Header";
+import { Redirect } from "react-router";
+import useAuth from "./users/hooks/useAuth";
 
 function Container() {
-  const [user, setUser] = useState("");
+  	const { user, refreshToken, refresh, logout } = useAuth();
 
-  const setUserHook = (e) => {
-    const userName = `${e.target[0].value} ${e.target[1].value}`;
-    e.preventDefault();
-    setUser(userName);
-  };
+	const handleLogout = useCallback(
+		(event) => {
+			event.preventDefault();
+			logout();
+		},
+		[logout]
+	);
+
+	useEffect(() => {
+		if (!user && refreshToken) {
+			refresh();
+		}
+	}, [user, refreshToken]);
+
+	//loader
+	if (!user && refreshToken) {
+		return (
+			<div className="loader">
+				<Grid
+					container
+					direction="row"
+					justify="center"
+					alignItems="center"
+					>
+					<p>Please wait. Loading data</p>
+					<CircularProgress disableShrink />
+				</Grid>
+			</div>
+		);
+	}
+	
+	//re-login
+	if (!user && !refreshToken) {
+		return (
+			<Redirect to="/login" />
+		);
+	}
 
   return (
     <div className="container">
-      <Header user={user} />
-      <Content setUserHook={setUserHook} />
+      <Header user={user} handleLogout={handleLogout} />
+      <Content />
       <Footer />
     </div>
   );
