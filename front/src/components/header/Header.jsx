@@ -5,9 +5,7 @@ import { Link, NavLink } from "react-router-dom";
 import AddEditArticlesBtn from "../../containers/articles/singleArticle/AddEditArticlesBtn";
 import { Button } from "@material-ui/core";
 import Logo from "./components/logo/Logo";
-// import PropTypes from "prop-types";
 import UserNav from "./components/userNav/UserNav";
-// import { userDataType } from '../content/userProfile/userType/userType';
 
 function Header({user, handleLogout}) {
     return (
@@ -35,9 +33,5 @@ function Header({user, handleLogout}) {
       </header>
     );
 }
-
-// Header.propTypes = {
-//   user: PropTypes.arrayOf(userDataType),
-// }
 
 export default Header;

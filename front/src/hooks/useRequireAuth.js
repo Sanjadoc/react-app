@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 
-import { Context } from "../../../authStore";
+import { Context } from "../authStore";
 import { useHistory } from "react-router-dom";
 
 const loginPath = "/login";

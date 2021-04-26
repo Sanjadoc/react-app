@@ -1,7 +1,7 @@
 import { useCallback, useContext } from "react";
 
+import { Context } from "../authStore";
 import axios from "axios";
-import { Context } from "../../../authStore";
 
 export default function useAuth() {
   const [state, dispatch] = useContext(Context);
