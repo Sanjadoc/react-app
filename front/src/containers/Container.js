@@ -7,7 +7,7 @@ import Content from "../components/content/Content";
 import Footer from "../components/footer/Footer";
 import Header from "../components/header/Header";
 import { Redirect } from "react-router";
-import useAuth from "./users/hooks/useAuth";
+import useAuth from "../hooks/useAuth";
 
 function Container() {
   	const { user, refreshToken, refresh, logout } = useAuth();
@@ -44,7 +44,7 @@ function Container() {
 	}
 	
 	//re-login
-	if (!user && !refreshToken) {
+	if (!user && refreshToken) {
 		return (
 			<Redirect to="/login" />
 		);

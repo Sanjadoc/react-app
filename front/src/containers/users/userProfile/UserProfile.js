@@ -1,7 +1,7 @@
 import React from "react";
 import UserProfile from "../../../components/content/userProfile/UserProfile";
-import useAuth from "../hooks/useAuth";
-import useRequireAuth from "../hooks/useRequireAuth";
+import useAuth from "../../../hooks/useAuth";
+import useRequireAuth from "../../../hooks/useRequireAuth";
 
 function UserProfileContainer() {
 

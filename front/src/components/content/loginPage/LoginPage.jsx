@@ -12,32 +12,32 @@ import SocialButton from "./coponents/socialButton/SocialButton";
 import axios from "axios";
 import { useCallback } from "react";
 import { useMutation } from "react-query";
-import useRequireAuth from "../../../containers/users/hooks/useRequireAuth";
+import useRequireAuth from "../../../hooks/useRequireAuth";
 
-function LoginPage({login}) {
-  const { REACT_APP_GOOGLE_APP_ID, REACT_APP_FACEBOOK_APP_ID, REACT_APP_SERVER_API_URL } = process.env;
+function LoginPage({ login }) {
+  const {
+    REACT_APP_GOOGLE_APP_ID,
+    REACT_APP_FACEBOOK_APP_ID,
+    REACT_APP_SERVER_API_URL,
+  } = process.env;
 
   const postLinkGoogle = `${REACT_APP_SERVER_API_URL}/auth/social/google`;
   const postLinkFacebook = `${REACT_APP_SERVER_API_URL}/auth/social/facebook`;
 
-   // Login
-   useRequireAuth(true);
-   
-  //  const { login } = useAuth();
-  // console.log(login);
- 
-   const mutation = useMutation(login);
- 
-   const postLogin = useCallback(
-     async (formData) => {
-       try {
-         await mutation.mutate(formData);
-       } catch (e) {
-         console.error(e);
-       }
-     },
-     [mutation]
-   );
+  useRequireAuth(true);
+
+  const mutation = useMutation(login);
+
+  const postLogin = useCallback(
+    async (formData) => {
+      try {
+        await mutation.mutate(formData);
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    [mutation]
+  );
 
   //social
   const handleSocialLogin = (user) => {
@@ -86,9 +86,7 @@ function LoginPage({login}) {
       <h1>User login page</h1>
 
       {mutation.data?.message && (
-        <div className="Error">
-          {mutation.data?.message}
-        </div>
+        <div className="Error">{mutation.data?.message}</div>
       )}
 
       <div className="login-page__sign-in">
@@ -119,10 +117,7 @@ function LoginPage({login}) {
                 ) : null}
               </div>
               <div>
-                <label
-                  htmlFor="password"
-                  className="login__form__label"
-                >
+                <label htmlFor="password" className="login__form__label">
                   Password:
                 </label>
                 <Field
@@ -179,7 +174,6 @@ function LoginPage({login}) {
             Sign in with Facebook
           </SocialButton>
         </div>
-
       </div>
     </div>
   );

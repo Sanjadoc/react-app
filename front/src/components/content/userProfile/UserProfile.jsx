@@ -6,34 +6,23 @@ import * as Yup from 'yup'
 import { Field, Form, Formik } from 'formik'
 import { useCallback, useState } from 'react'
 
+import ApiUser from '../../../containers/users/apiUser'
 import Button from '@material-ui/core/Button'
 import Cropper from 'react-cropper'
+import PropTypes from 'prop-types';
 import SendIcon from '@material-ui/icons/Send';
-import { sendAvatar } from '../../../containers/users/hooks/apiUser'
-import useApi from '../../../containers/users/hooks/useApi'
 import { useMutation } from 'react-query'
+import { userDataType } from './userType'
 
 function UserProfile({user}) {
 
-  const { callApi } = useApi();
+  const{updateProfile, sendAvatar} = ApiUser();
 
   const userId =user?.id;
-
-  console.log("user from jsx userProfile", user);
 
   const [image, setImage] = useState();
   const [cropper, setCropper] = useState();
   const [croppedImage, setCroppedImage] = useState();
-
-  const updateProfile = ({ userId, sendData }) => {
-    return callApi(
-      {
-        url: `/user/${userId}/update`,
-        method: "PUT",
-        data: {sendData}
-      }
-    );
-  }
 
   const { mutate: editUser } = useMutation(updateProfile);
   const { mutate: updateAvatar } = useMutation(sendAvatar);
@@ -234,6 +223,10 @@ function UserProfile({user}) {
       </div>
     </div>
   )
+}
+
+UserProfile.propType = {
+  user:  PropTypes.arrayOf(userDataType),
 }
 
 export default UserProfile
