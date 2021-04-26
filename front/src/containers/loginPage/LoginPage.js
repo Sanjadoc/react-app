@@ -1,5 +1,5 @@
 import LoginPage from "../../components/content/loginPage/LoginPage";
-import useAuth from "../users/hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 
 function LoginPageContainer() {
   const { login } = useAuth();

@@ -1,21 +1,33 @@
-import {apiClient} from "../../../configs/axios";
+import useApi from "../../../hooks/useApi";
 
-export const getArticlesList = async ({ limit }) => {
-  return apiClient.get(`/posts?limit=${limit}`);
-}
+export default function ApiArticles() {
+  const { callApi } = useApi();
 
-export const getOneArticle = async ({ articleId }) => {
-  return apiClient.get(`/posts/${articleId}`);
-}
+  const getArticlesList = async ({ limit }) => {
+    return callApi(`/posts?limit=${limit}`);
+  };
 
-export const createArticle = async({ sendData }) => {
-  return apiClient.post('/posts/create', sendData);
-}
+  const getOneArticle = async ({ articleId }) => {
+    return callApi(`/posts/${articleId}`);
+  };
 
-export const updateArticle = async ({ articleId, sendData }) => {
-  return apiClient.put(`/posts/${articleId}/update`, sendData);
-}
+  const createArticle = async ({ sendData }) => {
+    return callApi("/posts/create", "post", sendData);
+  };
 
-export const delArticle = async ({ articleId }) => {
-  return apiClient.delete(`/posts/${articleId}/delete`);
+  const updateArticle = async ({ articleId, sendData }) => {
+    return callApi(`/posts/${articleId}/update`, "put", sendData);
+  };
+
+  const delArticle = async ({ articleId }) => {
+    return callApi(`/posts/${articleId}/delete`, "delete");
+  };
+
+  return {
+    getArticlesList,
+    getOneArticle,
+    createArticle,
+    updateArticle,
+    delArticle,
+  };
 }

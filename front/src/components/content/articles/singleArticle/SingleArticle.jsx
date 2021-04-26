@@ -1,12 +1,13 @@
 import './SingleArticle.scss';
 
 import AddEditArticlesBtn from '../../../../containers/articles/singleArticle/AddEditArticlesBtn';
+import DeleteArticleBtn from '../../../../containers/articles/singleArticle/DeleteArticleBtn';
 import NotFound from '../../404/NotFound';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { articleDataType } from '../articlesType/articlesType';
-import useAuth from '../../../../containers/users/hooks/useAuth';
-import DeleteArticleBtn from '../../../../containers/articles/singleArticle/DeleteArticleBtn';
+import useAuth from '../../../../hooks/useAuth';
+
 function SingleArticle(data) {
 
   const { user } = useAuth();

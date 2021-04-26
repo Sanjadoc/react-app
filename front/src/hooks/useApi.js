@@ -1,4 +1,4 @@
-import { apiClient } from '../../../configs/axios';
+import { apiClient } from '../configs/axios';
 import useAuth from './useAuth';
 import { useCallback } from 'react';
 

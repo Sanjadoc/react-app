@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
 import { Redirect } from "react-router-dom";
 import SingleArticle from "../../../components/content/articles/singleArticle/SingleArticle";
-import { getOneArticle } from "../api/apiArticles";
-import useApi from '../../users/hooks/useApi';
+import useApi from '../../../hooks/useApi';
 import { useQuery } from "react-query";
-import useRequireAuth from '../../users/hooks/useRequireAuth';
+import useRequireAuth from '../../../hooks/useRequireAuth';
 
 function SingleArticleContainer({ routes }) {
 
